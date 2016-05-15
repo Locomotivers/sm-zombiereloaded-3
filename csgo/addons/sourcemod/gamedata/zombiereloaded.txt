@@ -1,0 +1,14 @@
+"Games"
+{
+	"csgo"
+	{
+		"Signatures"
+		{
+			"CBaseEntity_SetAbsVelocity"
+			{
+				"library"	"server"
+				"linux"		""
+			}
+		}
+	}
+}

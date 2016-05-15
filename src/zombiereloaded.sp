@@ -33,6 +33,7 @@
 #include <sdktools>
 #include <clientprefs>
 #include <cstrike>
+#include <emitsoundany>
 #define INCLUDED_BY_ZOMBIERELOADED
 #include <zombiereloaded>
 #undef INCLUDED_BY_ZOMBIERELOADED
@@ -122,7 +123,6 @@
 #include "zr/api/api"
 
 new bool:g_bLate = false;
-
 /**
  * Record plugin info.
  */
@@ -154,7 +154,7 @@ public APLRes:AskPluginLoad2(Handle:myself, bool:late, String:error[], err_max)
     RegPluginLibrary("zombiereloaded");
 
     g_bLate = late;
-
+    
     // Let plugin load.
     return APLRes_Success;
 }
@@ -216,6 +216,7 @@ public OnMapStart()
     SEffectsOnMapStart();
     ZSpawnOnMapStart();
     VolInit();
+    InfectSoundCountDown();
 }
 
 /**
@@ -262,7 +263,7 @@ public OnConfigsExecuted()
     ConfigOnModulesLoaded();
     ClassOnModulesLoaded();
 
-    if(g_bLate)
+    if (g_bLate)
     {
         for(new client = 1; client <= MaxClients; client++)
         {

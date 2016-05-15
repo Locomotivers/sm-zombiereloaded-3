@@ -141,11 +141,26 @@ VEffectsShakeClientScreen(client, Float:amplitude, Float:frequency, Float:durati
 {
     new Handle:hShake = StartMessageOne("Shake", client);
 
-    // Validate.
-    if (hShake == INVALID_HANDLE)
+    if (hShake != INVALID_HANDLE)
     {
-        return;
+        PbSetInt(hShake, "command", 0);
+        PbSetFloat(hShake, "local_amplitude", amplitude);
+        PbSetFloat(hShake, "frequency", frequency);
+        PbSetFloat(hShake, "duration", duration);
+
+        // End usermsg and send to client.
+        EndMessage();
     }
+
+/*
+ * Old Code since current one doesn't work with csgo
+ */
+
+    // Validate.
+   // if (hShake == INVALID_HANDLE)
+   // {
+      //  return;
+    //}
 
     // Future code using protocol buffers (not tested). Enabling this will bump
     // SourceMod version requirement to a snapshot, we don't want to do that
@@ -166,11 +181,11 @@ VEffectsShakeClientScreen(client, Float:amplitude, Float:frequency, Float:durati
     }*/
 
     // Write shake information to message handle.
-    BfWriteByte(hShake, 0);
-    BfWriteFloat(hShake, amplitude);
-    BfWriteFloat(hShake, frequency);
-    BfWriteFloat(hShake, duration);
+    //BfWriteByte(hShake, 0);
+    //BfWriteFloat(hShake, amplitude);
+    //BfWriteFloat(hShake, frequency);
+    //BfWriteFloat(hShake, duration);
 
     // End usermsg and send to client.
-    EndMessage();
+    //   EndMessage();
 }

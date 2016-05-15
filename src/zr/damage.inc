@@ -31,7 +31,7 @@
      */
     #define DMG_CSS_FALL        (DMG_FALL)      // Client was damaged by falling.
     #define DMG_CSS_BLAST       (DMG_BLAST)     // Client was damaged by explosion.
-    #define DMG_CSS_BURN        (DMG_DIRECT)    // Client was damaged by fire.
+    #define DMG_CSS_BURN        (DMG_BURN)    // Client was damaged by fire.
     #define DMG_CSS_BULLET      (DMG_NEVERGIB)  // Client was shot or knifed.
     #define DMG_CSS_HEADSHOT    (1 << 30)       // Client was shot in the head.
     /**
@@ -346,18 +346,19 @@ public ZRTools_Action:DamageOnTakeDamage(client, inflictor, attacker, Float:dama
         {
             new Float:clientPosition[3];
             new Float:attackerPosition[3];
-
+ 
             GetClientAbsOrigin(client, clientPosition);
             GetClientAbsOrigin(attacker, attackerPosition);
-
+ 
             new Float:distance = GetVectorDistance(clientPosition, attackerPosition);
-
+ 
             // Block infection if distance is higher than allowed.
             if (distance > maxDistance)
             {
                 return Plugin_Handled;
             }
         }
+
 
         // Client is about to be infected, re-add HP so they aren't killed by
         // knife. But only do this when immunity mode is disabled.
@@ -371,7 +372,7 @@ public ZRTools_Action:DamageOnTakeDamage(client, inflictor, attacker, Float:dama
         }
     }
     // Client was damaged by explosion.
-    else if (damagetype & DMG_CSS_BLAST)
+    else if (damagetype & DMG_BLAST)
     {
         // If blast damage is blocked, then stop.
         new bool:damageblockblast = GetConVarBool(g_hCvarsList[CVAR_DAMAGE_BLOCK_BLAST]);
@@ -396,7 +397,7 @@ public ZRTools_Action:DamageOnTakeDamage(client, inflictor, attacker, Float:dama
         return ACTION_HANDLED;
     }
     // Client was damaged by falling.
-    else if (damagetype & DMG_CSS_FALL)
+    else if (damagetype & DMG_FALL)
     {
         // If class has "nofalldamage" disabled, then allow damage.
         new bool:blockfalldamage = ClassGetNoFallDamage(client);

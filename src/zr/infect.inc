@@ -673,8 +673,22 @@ public Action:InfectCountdown(Handle:timer)
         return Plugin_Stop;
     }
 
+    int iCountLength = RoundToNearest(length - counter);
+    char sSoundDir[PLATFORM_MAX_PATH];
+    Format(sSoundDir, sizeof(sSoundDir), "sound/zr/countdown/%i.mp3", iCountLength);
+
+    if (FileExists(sSoundDir))
+    {
+        ReplaceString(sSoundDir, sizeof(sSoundDir), "sound/", "");
+
+        if (g_Game == Game_CSGO)
+            EmitSoundToAllAny(sSoundDir);
+        else
+            EmitSoundToAll(sSoundDir);
+    }
+
     // Print the countdown text to the clients.
-    TranslationPrintCenterTextAll(false, "Infect countdown", RoundToNearest(length - counter));
+    TranslationPrintCenterTextAll(false, "Infect countdown", iCountLength);
 
     counter++;
 
@@ -684,6 +698,32 @@ public Action:InfectCountdown(Handle:timer)
     WritePackFloat(hInfectCountdownData, counter);
 
     return Plugin_Continue;
+}
+
+/**
+ * Starts the infection sound countdown
+ */
+InfectSoundCountDown()
+{
+    int iCount = 1;
+    char sSoundDir[PLATFORM_MAX_PATH];
+    Format(sSoundDir, sizeof(sSoundDir), "sound/zr/countdown/%i.mp3", iCount);
+
+    while (FileExists(sSoundDir))
+    {
+        AddFileToDownloadsTable(sSoundDir);
+        ReplaceString(sSoundDir, sizeof(sSoundDir), "sound/", "");
+
+        if (g_Game != Game_CSGO) 
+            PrecacheSound(sSoundDir);
+        else
+            PrecacheSoundAny(sSoundDir);
+
+        iCount++;
+        Format(sSoundDir, sizeof(sSoundDir), "sound/zr/countdown/%i.mp3", iCount);
+    }
+
+
 }
 
 /**
