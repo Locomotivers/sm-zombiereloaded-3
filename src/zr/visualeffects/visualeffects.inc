@@ -141,51 +141,53 @@ VEffectsShakeClientScreen(client, Float:amplitude, Float:frequency, Float:durati
 {
     new Handle:hShake = StartMessageOne("Shake", client);
 
-    if (hShake != INVALID_HANDLE)
+    if (g_Game == Game_CSGO)
     {
-        PbSetInt(hShake, "command", 0);
-        PbSetFloat(hShake, "local_amplitude", amplitude);
-        PbSetFloat(hShake, "frequency", frequency);
-        PbSetFloat(hShake, "duration", duration);
+        if (hShake != INVALID_HANDLE)
+        {
+            PbSetInt(hShake, "command", 0);
+            PbSetFloat(hShake, "local_amplitude", amplitude);
+            PbSetFloat(hShake, "frequency", frequency);
+            PbSetFloat(hShake, "duration", duration);
 
-        // End usermsg and send to client.
-        EndMessage();
+            // End usermsg and send to client.
+            EndMessage();
+        }
     }
 
-/*
- * Old Code since current one doesn't work with csgo
- */
-
-    // Validate.
-   // if (hShake == INVALID_HANDLE)
-   // {
-      //  return;
-    //}
-
-    // Future code using protocol buffers (not tested). Enabling this will bump
-    // SourceMod version requirement to a snapshot, we don't want to do that
-    // until that branch is declared stable.
-    /*if (GetUserMessageType() == UM_Protobuf)
-    {
-        PbSetInt(hShake, "command", 0);
-        PbSetFloat(hShake, "local_amplitude", amplitude);
-        PbSetFloat(hShake, "frequency", frequency);
-        PbSetFloat(hShake, "duration", duration);
-    }
     else
     {
+        // Validate.
+        if (hShake == INVALID_HANDLE)
+        {
+            return;
+        }
+
+        // Future code using protocol buffers (not tested). Enabling this will bump
+        // SourceMod version requirement to a snapshot, we don't want to do that
+        // until that branch is declared stable.
+        /*if (GetUserMessageType() == UM_Protobuf)
+        {
+            PbSetInt(hShake, "command", 0);
+            PbSetFloat(hShake, "local_amplitude", amplitude);
+            PbSetFloat(hShake, "frequency", frequency);
+            PbSetFloat(hShake, "duration", duration);
+        }
+        else
+        {
+            BfWriteByte(hShake, 0);
+            BfWriteFloat(hShake, amplitude);
+            BfWriteFloat(hShake, frequency);
+            BfWriteFloat(hShake, duration);
+        }*/
+
+        // Write shake information to message handle.
         BfWriteByte(hShake, 0);
         BfWriteFloat(hShake, amplitude);
         BfWriteFloat(hShake, frequency);
         BfWriteFloat(hShake, duration);
-    }*/
 
-    // Write shake information to message handle.
-    //BfWriteByte(hShake, 0);
-    //BfWriteFloat(hShake, amplitude);
-    //BfWriteFloat(hShake, frequency);
-    //BfWriteFloat(hShake, duration);
-
-    // End usermsg and send to client.
-    //   EndMessage();
+        // End usermsg and send to client.
+        EndMessage();
+    }
 }

@@ -185,7 +185,7 @@ bool:RespawnSpawnClient(client, bool:zombie = false, bool:zombieIfSuicide = fals
 
     // Reset player velocity
     float fResetVelocity[3] = {0.0, 0.0, 0.0};
-    TelportEntity(client, NULL_VECTOR, NULL_VECTOR, fResetVelocity);
+    TeleportEntity(client, NULL_VECTOR, NULL_VECTOR, fResetVelocity);
 
     // Check if first zombie has spawned.
     if (InfectHasZombieSpawned())
