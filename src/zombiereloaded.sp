@@ -178,6 +178,23 @@ public OnPluginStart()
 }
 
 /**
+ * Plugin is unloading. only for csgo for now
+ */
+public OnPluginEnd()
+{
+    if (g_Game == Game_CSGO)
+    {
+        if(g_iPatchAddress != Address_Null)
+        {
+            for(new i=0;i<g_iPatchRestoreBytes;i++)
+            {
+                StoreToAddress(g_iPatchAddress+Address:i, g_iPatchRestore[i], NumberType_Int8);
+            }
+        }
+    }
+}
+
+/**
  * All plugins have finished loading.
  */
 public OnAllPluginsLoaded()
