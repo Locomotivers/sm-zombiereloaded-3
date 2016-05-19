@@ -99,7 +99,7 @@ ToolsFindOffsets()
         LogEvent(false, LogType_Fatal, LOG_CORE_EVENTS, LogModule_Tools, "Offsets", "Offset \"CBasePlayer::m_iFOV\" was not found.");
     }
 
-    // void CBaseEntity::SetAbsVelocity( const Vector &vecAbsVelocity ).   void CGameMovement::WalkMove(CGameMovement *this)  (CSGO ONLY)
+    // void CBaseEntity::SetAbsVelocity( const Vector &vecAbsVelocity ),   void CGameMovement::WalkMove(CGameMovement *this)  (CSGO ONLY)
     Handle hGameConf = LoadGameConfigFile("zombiereloaded");
     if (hGameConf != INVALID_HANDLE)
     {
